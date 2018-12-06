@@ -6,7 +6,7 @@ Výsledkem seminární práce bude jednoduchá CLI [ETL](https://en.wikipedia.or
 Hlavní funkčností bude dle uživatelem předem vytvořených scénářů provést ETL proces. Tvorba scénářů nahrávání bude možné přímo v jazyce Python, díky vytvořené knihovně. Po napsání scénáře bude kód možno transformovat do formátu JSON, s kterým bude pracovat aplikace při jeho provádění.  
 Aplikace bude umět pracovat s **CSV** soubory(.csv), **Excel** soubory(.xls) a databází **PostgreSQL**.   
 Podporovány budou nejpoužívanější datové typy - int, float, string, timestamp, bool. Možné zrychlení budu chtít otestovat použitím knihovny **NumPy**.   
-Pro zjednodušení nebude možné proud dat dělit nebo slučovat a aplikace bude jedno vláknová. 
+Pro zjednodušení nebude možné proud dat dělit nebo slučovat a aplikace bude jednovláknová. 
     
 Transformační možnosti budou např:
 * práce s textovými řetězci
