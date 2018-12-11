@@ -14,6 +14,63 @@ Transformační možnosti budou např:
 * lookup do jiného datového zdroje
 * filtrace sloupců
 
+### Příklady scénářů
+
+Uživatel bude chtít nahrát upravená data z CSV do databáze.
+
+**CSV soubor:**   
+
+user_bk | user_name | stud_id | age | sex
+--- | --- | --- | --- | ---
+1 | pletiond | 2131 | 23 | 1
+2| friedmag | 2211 | 25 | 0
+  
+1. V nahrávacím  scénáři zvolí jako zdroj tento CSV soubor. (zdroj)
+2. Přidá další krok pro úpravu sloupců a vybere sloupce user_bk, user_name, stud_id a sex. (filtrace sloupců)
+3. Nastaví mapování u pohlaví: 0 -> M, 1 -> W (mapování)
+4. Přidá krok pro lookup do databáze. A nastaví, že podle user_name najde v databázi peridno a udělá z toho nový sloupec. (lookup)
+5. Přidá krok pro nahrávání dat do cílové databáze, nastaví připojení a mapování názvu sloupců. (nahrání)
+
+**Příklad výstupu:**
+
+user_bk | fk_osoba_peridno_bk | fk_stud_id_bk | sex
+--- | --- | --- | --- 
+1 | 231231 | 2131 |  M
+2| 231299 | 2211 |  W
+
+#### Ukázka jak by mohlo vypadat psaní scénáře:
+
+```python
+import etl_tool as  etl
+
+
+transformation = et.Transformation()
+
+load  = etl.Load_from_csv()
+load.set_path('tmp/my.csv')
+load.load_all = True
+load.auto_set_data_types = True
+
+transformation.add_step(load)
+
+select = etl.SelectColumns()
+select.columns = ['user_bk', 'user_name', 'stud_id', 'sex']
+
+transformation.add_step(select)
+
+mapping = etl.MapValues()
+mapping.rules ={'sex':[[0,'W'],[1, 'M']}
+
+transformation.add_step(mapping)
+
+...
+
+transformation.save('tmp/transformation.json')
+
+
+```
+Výsledký soubor bude použit pro nahrávací aplikaci, která provede ETL.
+
 
 ### Funkční požadavky
 * Nahrávání z/do souborů typu CSV, Excel nebo databáze PostgreSQL
