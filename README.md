@@ -44,7 +44,7 @@ user_bk | fk_osoba_peridno_bk | fk_stud_id_bk | sex
 import etl_tool as  etl
 
 
-transformation = et.Transformation()
+transformation = etl.Transformation()
 
 load  = etl.Load_from_csv()
 load.set_path('tmp/my.csv')
