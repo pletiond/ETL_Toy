@@ -27,7 +27,6 @@ class Mapping:
             self._apply_rules(column, rules)
 
         self.data.data = self.transpone_final.T
-        print(self.transpone_final)
         self.logger.info(
             f'mapping job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
 
