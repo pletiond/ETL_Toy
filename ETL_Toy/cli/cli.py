@@ -7,31 +7,43 @@ from ETL_Toy.jobs.mapping import Mapping
 from ETL_Toy.jobs.string_operations import String_operations
 from ETL_Toy.jobs.read_excel import Read_excel
 from ETL_Toy.jobs.write_to_excel import Write_To_Excel
-
+from ETL_Toy.jobs.read_postgresql import Read_Postgresql
+from ETL_Toy.jobs.write_to_postgresql import Write_To_Postgresql
+from ETL_Toy.jobs.sort_data import Sort_Data
 import click
+
 transformation = Transformation()
 
-# read_csv = Read_csv('reader1', 'INPUT_CSV', ';')
-# transformation.add_step(read_csv)
+read_csv = Read_csv('reader1', 'CSV_COMPANY', ';')
+transformation.add_step(read_csv)
 
-excel_reader = Read_excel('excel1', 'INPUT_EXCEL')
-transformation.add_step(excel_reader)
+# excel_reader = Read_excel('excel1', 'INPUT_EXCEL')
+# transformation.add_step(excel_reader)
+# read_posgres = Read_Postgresql('postgres1', 'POSTGRESQL', 'COMPANY')
+# transformation.add_step(read_posgres)
 
-mapping = Mapping('mapping1')
-mapping.new_mapping('sex', 1, 'M')
-mapping.new_mapping('sex', 0, 'Ž')
-transformation.add_step(mapping)
 
-so = String_operations('so1')
+# mapping = Mapping('mapping1')
+# mapping.new_mapping('sex', 1, 'M')
+# mapping.new_mapping('sex', 0, 'Ž')
+# transformation.add_step(mapping)
 
-so.do_lower(['prijimeni'])
-so.do_capitalize(['prijimeni'])
-transformation.add_step(so)
+# so = String_operations('so1')
+
+# so.do_lower(['prijimeni'])
+# so.do_capitalize(['prijimeni'])
+# transformation.add_step(so)
+
+sorting = Sort_Data('sort1', 'salary')
+transformation.add_step(sorting)
 
 # write_to_csv = Write_To_CSV('writer1', 'OUTPUT_CSV', '|')
 # transformation.add_step(write_to_csv)
-write_excel = Write_To_Excel('excel_write', 'OUTPUT_EXCEL')
+write_excel = Write_To_Excel('excel_write2', 'OUTPUT_EXCEL_COMPANY')
 transformation.add_step(write_excel)
+
+# write_to_postgres = Write_To_Postgresql('postgres2', 'POSTGRESQL', 'COMPANY')
+#transformation.add_step(write_to_postgres)
 
 # transformation.run()
 
@@ -42,7 +54,6 @@ transformation.save('C:\\Disk\\CVUT-FIT\\PYT\\mi-pyt-sem\\tests\\output.obj')
 
 # output.run()
 
-# TODO click + data sources
 
 @click.command()
 @click.option('--data_targets', '-d', default=None, show_default=True, help='File with data targets')

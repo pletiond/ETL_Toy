@@ -44,7 +44,7 @@ class Read_csv:
         config = configparser.ConfigParser()
         config.read(self.data_targets)
         if not self.data_target_name in config.sections():
-            raise Exception('Invalid data target')
+            raise Exception('Invalid data target name')
         if not 'file' in config[self.data_target_name]:
             raise Exception('Invalid data target type')
         return config[self.data_target_name]['file']

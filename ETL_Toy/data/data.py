@@ -23,3 +23,7 @@ class Data:
         self.columns_names.pop(number)
         self.columns_dtypes.pop(number)
         self.data = numpy.delete(self.data, number, 1)
+
+    def sort_by_column(self, column):
+        index = self.columns_names.index(column)
+        self.data = self.data[self.data[:, index].argsort()]
