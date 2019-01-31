@@ -1,10 +1,17 @@
-import logging
 import configparser
+import logging
 
 
 class Write_To_CSV:
-
+    """
+    Write data to file with CSV format
+    """
     def __init__(self, name, data_target_name, delimiter):
+        """
+        :param name: Step name
+        :param data_target_name: Data target name
+        :param delimiter: CSV delimiter
+        """
         self.name = name
         self.data_target_name = data_target_name
         self.data_targets = None
@@ -25,6 +32,10 @@ class Write_To_CSV:
             f'Write_to_csv job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
 
     def _get_file(self):
+        """
+        Load target file from data targets file
+        :return: path to file
+        """
         config = configparser.ConfigParser()
         config.read(self.data_targets)
         if not self.data_target_name in config.sections():

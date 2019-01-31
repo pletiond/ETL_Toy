@@ -2,7 +2,9 @@ import logging
 
 
 class Mapping:
-
+    """
+    Using rules map values in selected column to new ones
+    """
     def __init__(self, name):
         self.name = name
         self.data = None
@@ -12,6 +14,12 @@ class Mapping:
         self.transpone_final = None
 
     def new_mapping(self, column, old, new):
+        """
+        Add new mapping rule
+        :param column: Selected column
+        :param old: Old value
+        :param new: New value
+        """
         if not column in self.rules:
             self.rules[column] = {}
         self.rules[column][old] = new
@@ -30,6 +38,11 @@ class Mapping:
             f'mapping job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
 
     def _apply_rules(self, column, rules):
+        """
+        Apply rules in selected column
+        :param column: Selected column
+        :param rules: Rules
+        """
         for i in range(len(self.data.columns_names)):
             if not column == self.data.columns_names[i]:
                 continue

@@ -5,8 +5,14 @@ from openpyxl import load_workbook
 
 
 class Read_excel:
-
+    """
+    Read excel file and load data
+    """
     def __init__(self, name, data_target_name):
+        """
+        :param name: Step name
+        :param data_target_name: Data target name
+        """
         self.data = None
         self.data_target_name = data_target_name
         self.logger = logging.getLogger(__name__)
@@ -15,6 +21,10 @@ class Read_excel:
         self.column_cnt = 0
 
     def process(self):
+        """
+        Open workbook and iter all rows
+        :return:
+        """
         self.logger.info(f'Starting new read_excel job - {self.name}!')
 
         if len(self.data.columns_names) > 0:
@@ -36,7 +46,9 @@ class Read_excel:
             f'Read_excel job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
 
     def _get_file_and_sheet(self):
-
+        """
+        Using data target name find path to excel file and sheet name
+        """
         config = configparser.ConfigParser()
         config.read(self.data_targets)
         if not self.data_target_name in config.sections():

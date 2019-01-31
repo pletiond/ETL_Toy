@@ -4,8 +4,13 @@ import numpy
 
 
 class String_operations:
-
+    """
+    Step for string operations - string upper/lower/capitalize
+    """
     def __init__(self, name):
+        """
+        :param name: step name
+        """
         self.name = name
         self.data = None
         self.logger = logging.getLogger(__name__)
@@ -16,12 +21,15 @@ class String_operations:
         self.capitalize = []
 
     def do_upper(self, columns):
+        """Select columns for upper"""
         self.upper = columns
 
     def do_lower(self, columns):
+        """Select columns for lower"""
         self.lower = columns
 
     def do_capitalize(self, columns):
+        """Select columns for capitalize"""
         self.capitalize = columns
 
     def process(self):

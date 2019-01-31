@@ -5,8 +5,17 @@ import psycopg2
 
 
 class Read_Postgresql:
-
+    """
+    Connect to Postgresql database and load data from selected table
+    """
     def __init__(self, name, data_target_name, table, schema='public', columns='*'):
+        """
+        :param name: Step name
+        :param data_target_name: Data target name
+        :param table: Target table name
+        :param schema: Target schema name
+        :param columns: Columns to load
+        """
         self.data = None
         self.data_target_name = data_target_name
         self.logger = logging.getLogger(__name__)
@@ -22,6 +31,9 @@ class Read_Postgresql:
         self.columns = columns
 
     def process(self):
+        """
+        Connect to database
+        """
         self.logger.info(f'Starting new read_postgresql job - {self.name}!')
         if len(self.data.columns_names) > 0:
             self.logger.info(f'{self.name} not empty input data!')
@@ -41,11 +53,14 @@ class Read_Postgresql:
             f'Read_postgresql job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
 
     def _load_data(self):
+        """
+        Run select query and get all rows
+        :return:
+        """
         cur = self.conn.cursor()
         cur.execute(f'SELECT {self.columns} FROM {self.schema}.{self.table}')
         colnames = [desc[0] for desc in cur.description]
         row = cur.fetchone()
-        print(colnames)
         for colname in colnames:
             self.data.add_column_name(colname, '')
         while row is not None:
@@ -56,6 +71,9 @@ class Read_Postgresql:
         self.conn.close()
 
     def _load_credentials(self):
+        """
+        Using data target name load host, dbname, port and user
+        """
         config = configparser.ConfigParser()
         config.read(self.data_targets)
         if not self.data_target_name in config.sections():

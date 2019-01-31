@@ -31,6 +31,10 @@ class Filter_columns:
 
 
     def _only_remove(self):
+        """
+        Remove selected columns
+        :return: False if column doesnt exist
+        """
         for column in self.remove:
             res = self.data.remove_column(column)
             if not res:
@@ -39,6 +43,9 @@ class Filter_columns:
 
 
     def _select_columns(self):
+        """
+        Select columns by whitelist, remove others
+        """
         all_columns = list(self.data.columns_names)
         for column in all_columns:
             if column in self.allowed:

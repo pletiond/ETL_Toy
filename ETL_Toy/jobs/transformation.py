@@ -9,6 +9,9 @@ from ETL_Toy.data.data import Data
 
 
 class Transformation:
+    """
+    Spine of the application, contains all steps
+    """
     jobs = []
 
     def __init__(self):
@@ -19,23 +22,36 @@ class Transformation:
         self.jobs.append(step)
 
     def save(self, path):
+        """
+        Save current transformation into file
+        :param path: Path for saving
+        """
         filehander = open(path, "wb")
         pickle.dump(self, filehander)
         filehander.close()
 
     @staticmethod
     def load(path):
+        """
+        Load saved transformation
+        :param path: Path for  loading
+        :return: loaded class
+        """
         file = open(path, "rb")
         object_file = pickle.load(file)
         return object_file
 
     def run(self, log_path, data_targets=None):
+        """
+        Run transformation - all steps in order
+        :param log_path: Path to log file
+        :param data_targets: Path to data targets file
+        """
         self.data_targets = data_targets
         self._set_logging(log_path)
         logging.info('ETL_Toy started!')
         curr_data = Data()
         try:
-
             for step in self.jobs:
                 step.data = curr_data
                 step.data_targets = self.data_targets
@@ -54,8 +70,12 @@ class Transformation:
         click.echo(mess)
 
     def _set_logging(self, log_path):
+        """
+        Set logging  in selected file. Logging time,type of message, module and message
+        :param log_path: Path to log file
+        :return:
+        """
         dirname = os.getcwd()
         path = os.path.join(dirname, log_path)
-        print(path)
         logging.basicConfig(filename=path, level=logging.INFO,
                             format='%(asctime)s - %(levelname)s - %(module)s - %(message)s')

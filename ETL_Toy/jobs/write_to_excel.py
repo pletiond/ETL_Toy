@@ -1,10 +1,13 @@
-import logging
 import configparser
+import logging
+
 from openpyxl import Workbook
 
 
 class Write_To_Excel:
-
+    """
+    Write data to new Excel workbook
+    """
     def __init__(self, name, data_target_name):
         self.data = None
         self.data_target_name = data_target_name
@@ -13,6 +16,10 @@ class Write_To_Excel:
         self.data_targets = None
 
     def process(self):
+        """
+        Create new workbook and write header and data
+        :return:
+        """
         self.logger.info(f'Starting new write_to_excel job - {self.name}!')
         file, sheet = self._get_file_and_sheet()
 
@@ -28,6 +35,10 @@ class Write_To_Excel:
             f'Write_to_excel job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
 
     def _get_file_and_sheet(self):
+        """
+        Get file path and sheet from data targets file
+        :return: path to file and name of sheet
+        """
         config = configparser.ConfigParser()
         config.read(self.data_targets)
         if not self.data_target_name in config.sections():

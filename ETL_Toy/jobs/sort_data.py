@@ -2,8 +2,14 @@ import logging
 
 
 class Sort_Data():
-
+    """
+    Sort dataset by selected column
+    """
     def __init__(self, name, column):
+        """
+        :param name: Step name
+        :param column: Sorting column
+        """
         self.data = None
         self.logger = logging.getLogger(__name__)
         self.name = name
