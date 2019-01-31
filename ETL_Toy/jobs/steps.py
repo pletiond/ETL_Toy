@@ -14,6 +14,7 @@ class Dummy:
     def __init__(self, name):
         """
         :param name: Step name
+        :type name: str
         """
         self.logger = logging.getLogger(__name__)
         self.name = name
@@ -33,6 +34,7 @@ class Filter_Columns:
     def __init__(self, name):
         """
         :param name: Step name
+        :type name: str
         """
         self.name = name
         self.allowed = None
@@ -41,9 +43,17 @@ class Filter_Columns:
         self.logger = logging.getLogger(__name__)
 
     def set_columns(self, names):
+        """
+        :param names: Column names
+        :type names: list
+        """
         self.allowed = names
 
     def remove_columns(self, names):
+        """
+        :param names: columns to remove
+        :type names: list
+        """
         self.remove = names
 
     def process(self):
@@ -87,6 +97,7 @@ class Mapping:
     def __init__(self, name):
         """
         :param name: Step name
+        :type name: str
         """
         self.name = name
         self.data = None
@@ -98,6 +109,7 @@ class Mapping:
     def new_mapping(self, column, old, new):
         """
         Add new mapping rule
+
         :param column: Selected column
         :param old: Old value
         :param new: New value
@@ -123,7 +135,9 @@ class Mapping:
         """
         Apply rules in selected column
         :param column: Selected column
+        :type column: str
         :param rules: Rules
+        :type rules: dict
         """
         for i in range(len(self.data.columns_names)):
             if not column == self.data.columns_names[i]:
@@ -147,8 +161,11 @@ class Read_csv:
     def __init__(self, name, data_target_name, delimiter):
         """
         :param name: Step name
+        :type name: str
         :param data_target_name: Name of data target
+        :type data_target_name: str
         :param delimiter: CSV delimiter
+        :type delimiter: str
         """
         self.data = None
         self.data_target_name = data_target_name
@@ -428,15 +445,24 @@ class String_operations:
         self.capitalize = []
 
     def do_upper(self, columns):
-        """Select columns for upper"""
+        """Select columns for upper
+        :param columns: Selected  columns
+        :type columns: list
+        """
         self.upper = columns
 
     def do_lower(self, columns):
-        """Select columns for lower"""
+        """Select columns for lower
+        :param columns: Selected  columns
+        :type columns: list
+        """
         self.lower = columns
 
     def do_capitalize(self, columns):
-        """Select columns for capitalize"""
+        """Select columns for capitalize
+        :param columns: Selected  columns
+        :type columns: list
+        """
         self.capitalize = columns
 
     def process(self):
