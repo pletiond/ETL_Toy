@@ -28,14 +28,13 @@ class Filter_columns:
             f'Filter_columns job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
 
     def _only_remove(self):
-        print('ONLY REMOVE!!!')
         for column in self.remove:
             self.data.remove_column(column)
 
     def _select_columns(self):
         all_columns = list(self.data.columns_names)
         for column in all_columns:
-            print(column)
             if column in self.allowed:
                 continue
             self.data.remove_column(column)
+
