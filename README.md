@@ -74,7 +74,7 @@ Výsledký soubor bude použit pro nahrávací aplikaci, která provede ETL.
 
 ### Funkční požadavky
 * Nahrávání z/do souborů typu CSV, Excel nebo databáze PostgreSQL
-* Tvorba vlastních scénářů a následné uložení ve formátu JSON
+* Tvorba vlastních scénářů a následné uložení ~~ve formátu JSON~~
 * Zapisování průběhu nahrávání do logu
 * Bude možné provádět standartní transformace (přidání/odebrání sloupce, úprava dat. typu, práce s textem)
 
