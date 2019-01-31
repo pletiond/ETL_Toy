@@ -14,7 +14,6 @@ def main(data_targets, log, target):
     @:param data_targets: File with data targets
     @param log: Relative path to log file
     @param target: Target file including transformation
-
     """
 
     if not len(target) == 1:

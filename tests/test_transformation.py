@@ -1,14 +1,15 @@
-from ETL_Toy.jobs.transformation import Transformation
-from ETL_Toy.jobs.sort_data import Sort_Data
-from ETL_Toy.jobs.filter_columns import Filter_columns
-from ETL_Toy.jobs.string_operations import String_operations
 import os
+
+from ETL_Toy.jobs.steps import Filter_Columns
+from ETL_Toy.jobs.steps import Sort_Data
+from ETL_Toy.jobs.steps import String_operations
+from ETL_Toy.jobs.transformation import Transformation
 
 
 def test_save_load():
     trans = Transformation()
     trans.add_step(Sort_Data('tmp1', ''))
-    trans.add_step(Filter_columns('tmp2'))
+    trans.add_step(Filter_Columns('tmp2'))
     trans.add_step(String_operations('tmp3'))
 
     dirname = os.path.dirname(__file__)

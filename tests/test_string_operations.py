@@ -1,5 +1,5 @@
-from ETL_Toy.jobs.string_operations import String_operations
 from ETL_Toy.data.data import Data
+from ETL_Toy.jobs.steps import String_operations
 
 
 def init():

@@ -6,7 +6,6 @@ class Data:
     Class for data storage
     Using 2D numpy array for data and list for column names
     """
-
     columns_names = []
     data = None
 

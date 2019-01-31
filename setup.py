@@ -8,7 +8,7 @@ setup(
     license='',
     author='Ondřej Pleticha',
     author_email='o.pleticha@seznam.cz',
-    description='',
+    description='ETL_Toy is simple CLI tool for ETL operations. It can be used for moving data from/to CSV file, Excel workbook and Postgresql database.',
     install_requires=[
         'click',
         'configparser',

@@ -1,6 +1,7 @@
-from ETL_Toy.jobs.read_csv import Read_csv
-from ETL_Toy.data.data import Data
 import os
+
+from ETL_Toy.data.data import Data
+from ETL_Toy.jobs.steps import Read_csv
 
 
 def test_read_correct():

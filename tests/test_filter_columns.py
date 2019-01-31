@@ -1,9 +1,9 @@
-from ETL_Toy.jobs.filter_columns import Filter_columns
 from ETL_Toy.data.data import Data
+from ETL_Toy.jobs.steps import Filter_Columns
 
 
 def init():
-    filter_col = Filter_columns('tmp')
+    filter_col = Filter_Columns('tmp')
     data = Data()
     data.columns_names = ['ID', 'NAME', 'SURNAME']
     data.add_row(['1', 'Andy', 'Pleticha'])

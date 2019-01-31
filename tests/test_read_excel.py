@@ -1,6 +1,7 @@
-from ETL_Toy.jobs.read_excel import Read_excel
-from ETL_Toy.data.data import Data
 import os
+
+from ETL_Toy.data.data import Data
+from ETL_Toy.jobs.steps import Read_excel
 
 
 def test_read():

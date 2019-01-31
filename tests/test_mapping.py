@@ -1,5 +1,5 @@
-from ETL_Toy.jobs.mapping import Mapping
 from ETL_Toy.data.data import Data
+from ETL_Toy.jobs.steps import Mapping
 
 
 def init():
