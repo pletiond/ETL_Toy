@@ -3,7 +3,7 @@ ETL_Toy
 ======================
 
 .. toctree::
-:maxdepth: 5
+    :maxdepth: 5
 
 .. contents:: Table of Contents
     :depth: 3
@@ -144,11 +144,18 @@ Jobs
 ETL_Toy library
 ==================
 
+ETL_Toy.jobs.transformation
+-----------------------------
+.. automodule:: ETL_Toy.jobs.transformation
+        :members:
+        :undoc-members:
+        :show-inheritance:
+
 ETL_Toy.data.data
 ------------------
 
 .. automodule:: ETL_Toy.data.data
-:members:
+        :members:
         :undoc-members:
         :show-inheritance:
 
@@ -156,6 +163,6 @@ ETL_Toy.jobs
 ------------------
 
 .. automodule:: ETL_Toy.jobs.steps
-:members:
+        :members:
         :undoc-members:
         :show-inheritance:

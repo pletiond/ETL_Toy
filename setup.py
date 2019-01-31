@@ -14,7 +14,8 @@ setup(
         'configparser',
         'numpy',
         'openpyxl',
-        'psycopg2'
+        'psycopg2',
+        'dill'
     ],
     entry_points={
         'console_scripts': [

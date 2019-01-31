@@ -234,8 +234,10 @@ class Read_excel:
 
     def __init__(self, name, data_target_name):
         """
+
         :param name: Step name
         :param data_target_name: Data target name
+
         """
         self.data = None
         self.data_target_name = data_target_name
@@ -247,7 +249,6 @@ class Read_excel:
     def process(self):
         """
         Open workbook and iter all rows
-        :return:
         """
         self.logger.info(f'Starting new read_excel job - {self.name}!')
 
@@ -446,22 +447,28 @@ class String_operations:
 
     def do_upper(self, columns):
         """Select columns for upper
+
         :param columns: Selected  columns
         :type columns: list
+
         """
         self.upper = columns
 
     def do_lower(self, columns):
         """Select columns for lower
+
         :param columns: Selected  columns
         :type columns: list
+
         """
         self.lower = columns
 
     def do_capitalize(self, columns):
         """Select columns for capitalize
+
         :param columns: Selected  columns
         :type columns: list
+
         """
         self.capitalize = columns
 
@@ -560,7 +567,7 @@ class Write_To_Excel:
     def process(self):
         """
         Create new workbook and write header and data
-        :return:
+
         """
         self.logger.info(f'Starting new write_to_excel job - {self.name}!')
         file, sheet = self._get_file_and_sheet()

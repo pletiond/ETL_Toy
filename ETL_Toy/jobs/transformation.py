@@ -1,14 +1,13 @@
 import logging
 import logging.config
 import os
-import pickle
-
 import click
+import dill
 
 from ETL_Toy.data.data import Data
 
 
-class Transformation:
+class Transformation(object):
     """
     Spine of the application, contains all steps
     """
@@ -18,34 +17,51 @@ class Transformation:
         self.logger = logging.getLogger(__name__)
         self.data_targets = None
 
+
     def add_step(self, step):
         self.jobs.append(step)
+
 
     def save(self, path):
         """
         Save current transformation into file
+
         :param path: Path for saving
+
         """
-        filehander = open(path, "wb")
-        pickle.dump(self, filehander)
-        filehander.close()
+        out = []
+        out.append(self)
+        out += self.jobs
+        with open(path, 'wb') as f:
+            dill.dump(out, f, recurse=True)
+
 
     @staticmethod
     def load(path):
         """
         Load saved transformation
+
         :param path: Path for  loading
         :return: loaded class
+
         """
-        file = open(path, "rb")
-        object_file = pickle.load(file)
-        return object_file
+
+        with open(path, 'rb') as pkl:
+            f = dill.load(pkl)
+
+            main = f[0]
+            main.jobs = []
+            for step in f[1:]:
+                main.add_step(step)
+            return main
 
     def run(self, log_path, data_targets=None):
         """
         Run transformation - all steps in order
+
         :param log_path: Path to log file
         :param data_targets: Path to data targets file
+
         """
         self.data_targets = data_targets
         self._set_logging(log_path)

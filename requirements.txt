@@ -3,3 +3,4 @@ configparser
 numpy
 openpyxl
 psycopg2
+dill
