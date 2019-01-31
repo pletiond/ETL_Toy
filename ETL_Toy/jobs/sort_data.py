@@ -13,6 +13,10 @@ class Sort_Data():
     def process(self):
         self.logger.info(f'Starting new sorting job - {self.name}!')
 
+        if not self.sorting_column in self.data.columns_names:
+            self.logger.info(f'{self.name} column doesnt exist!')
+            raise Exception(f'{self.name} column doesnt exist!')
+
         self.data.sort_by_column(self.sorting_column)
 
         self.logger.info(

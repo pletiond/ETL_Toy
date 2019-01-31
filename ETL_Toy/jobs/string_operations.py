@@ -1,4 +1,5 @@
 import logging
+
 import numpy
 
 
@@ -25,6 +26,7 @@ class String_operations:
 
     def process(self):
         self.logger.info(f'Starting new string_operations job - {self.name}!')
+        self._check_columns()
         self.transpone = self.data.data.T
         self.transpone_final = self.data.data.T
 
@@ -35,6 +37,13 @@ class String_operations:
         self.data.data = self.transpone_final.T
         self.logger.info(
             f'String_operations job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
+
+    def _check_columns(self):
+        for column in self.upper + self.lower + self.capitalize:
+            if not column in self.data.columns_names:
+                self.logger.info(f'{self.name} - column doesnt exist!')
+                raise Exception(f'{self.name} - column doesnt exist!')
+
 
     def _process_lower(self):
         for column in self.lower:

@@ -1,6 +1,10 @@
 import logging
 import logging.config
+import os
 import pickle
+
+import click
+
 from ETL_Toy.data.data import Data
 
 
@@ -25,7 +29,7 @@ class Transformation:
         object_file = pickle.load(file)
         return object_file
 
-    def run(self, log_path='../..', data_targets=None):
+    def run(self, log_path, data_targets=None):
         self.data_targets = data_targets
         self._set_logging(log_path)
         logging.info('ETL_Toy started!')
@@ -33,22 +37,25 @@ class Transformation:
         try:
 
             for step in self.jobs:
-                print(f'Step_name= {step.name}')
                 step.data = curr_data
                 step.data_targets = self.data_targets
                 step.process()
                 curr_data = step.data
 
         except Exception as e:
-            # print(e.with_traceback())
-            print('ERROR')
-            raise e
+            print(e.with_traceback())
+            logging.info('ETL_Toy finished with error!')
+            mess = click.style('ETL_Toy finished with error! More information in log file.', fg='red')
+            click.echo(mess)
+            exit(1)
 
         logging.info('ETL_Toy finished successfully!')
+        mess = click.style('ETL_Toy finished successfully!', fg='green')
+        click.echo(mess)
 
     def _set_logging(self, log_path):
-        if not log_path == '':
-            log_path += '/'
-
-        logging.basicConfig(filename='../../ETL_Toy.log', level=logging.INFO,
+        dirname = os.getcwd()
+        path = os.path.join(dirname, log_path)
+        print(path)
+        logging.basicConfig(filename=path, level=logging.INFO,
                             format='%(asctime)s - %(levelname)s - %(module)s - %(message)s')

@@ -2,7 +2,9 @@ import logging
 
 
 class Filter_columns:
-
+    """
+    This step filter column by whitelist or blacklist
+    """
     def __init__(self, name):
         self.name = name
         self.allowed = None
@@ -27,9 +29,14 @@ class Filter_columns:
         self.logger.info(
             f'Filter_columns job - {self.name} ended - {len(self.data.data)} lines, {len(self.data.columns_names)} columns.')
 
+
     def _only_remove(self):
         for column in self.remove:
-            self.data.remove_column(column)
+            res = self.data.remove_column(column)
+            if not res:
+                self.logger.info(f'{self.name} - Column doesnt exist!')
+                raise Exception('{self.name} - Column doesnt exist!')
+
 
     def _select_columns(self):
         all_columns = list(self.data.columns_names)

@@ -1,5 +1,6 @@
-import logging
 import configparser
+import logging
+
 from openpyxl import load_workbook
 
 
@@ -15,6 +16,11 @@ class Read_excel:
 
     def process(self):
         self.logger.info(f'Starting new read_excel job - {self.name}!')
+
+        if len(self.data.columns_names) > 0:
+            self.logger.info(f'{self.name} not empty input data!')
+            raise Exception(f'{self.name} not empty input data!')
+
         file, sheet = self._get_file_and_sheet()
         wb = load_workbook(filename=file, read_only=True)
         ws = wb[sheet]
@@ -34,10 +40,13 @@ class Read_excel:
         config = configparser.ConfigParser()
         config.read(self.data_targets)
         if not self.data_target_name in config.sections():
-            raise Exception('Invalid data target')
+            self.logger.info(f'{self.name} - Invalid data target name')
+            raise Exception('Invalid data target  name')
         if not 'file' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - Invalid data target type, missing "file"')
             raise Exception('Invalid data target type')
         if not 'sheet' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - Invalid data target type, missing "sheet"')
             raise Exception('Invalid data target type')
         return config[self.data_target_name]['file'], config[self.data_target_name]['sheet']
 
@@ -51,6 +60,7 @@ class Read_excel:
         for cell in row:
             line.append(cell.value)
         if not len(line) == self.column_cnt:
+            self.logger.info(f'{self.name} - Different row lenght')
             raise Exception('Different row lenght')
         else:
             self.data.add_row(line)

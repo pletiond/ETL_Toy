@@ -1,5 +1,6 @@
-import logging
 import configparser
+import logging
+
 
 class Read_csv:
 
@@ -14,6 +15,11 @@ class Read_csv:
 
     def process(self):
         self.logger.info(f'Starting new read_csv job - {self.name}!')
+
+        if len(self.data.columns_names) > 0:
+            self.logger.info(f'{self.name} not empty input data!')
+            raise Exception(f'{self.name} not empty input data!')
+
         first = True
         file = self._get_file()
         with open(file, 'r', encoding='utf8') as f:
@@ -35,8 +41,8 @@ class Read_csv:
     def _parse_line(self, line):
         parsed_line = str(line).replace('\n', '').rstrip().split(self.delimiter)
         if not len(parsed_line) == self.column_cnt:
-            print('Len error')
-            raise Exception('TO DO')
+            self.logger.info(f'{self.name} - header and row lenght not match!')
+            raise Exception(f'{self.name} - header and row lenght not match!')
 
         self.data.add_row(parsed_line)
 
@@ -44,7 +50,9 @@ class Read_csv:
         config = configparser.ConfigParser()
         config.read(self.data_targets)
         if not self.data_target_name in config.sections():
+            self.logger.info(f'{self.name} - Invalid data target name')
             raise Exception('Invalid data target name')
         if not 'file' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - Invalid data target type')
             raise Exception('Invalid data target type')
         return config[self.data_target_name]['file']

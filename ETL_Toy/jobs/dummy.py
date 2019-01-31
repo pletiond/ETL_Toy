@@ -2,7 +2,9 @@ import logging
 
 
 class Dummy:
-
+    """
+    Dummy class for testing
+    """
     def __init__(self, name):
         self.logger = logging.getLogger(__name__)
         self.name = name

@@ -1,5 +1,6 @@
-import logging
 import configparser
+import logging
+
 import psycopg2
 
 
@@ -26,6 +27,7 @@ class Write_To_Postgresql:
             self.conn = psycopg2.connect(
                 f'dbname={self.dbname} user={self.user} port={self.port} host={self.host} password={self.password}')
         except:
+            self.logger.info(f'{self.name} - Unable to connect to database.')
             raise Exception('Unable to connect to database.')
 
         self._insert_data()
@@ -60,14 +62,19 @@ class Write_To_Postgresql:
         if not self.data_target_name in config.sections():
             raise Exception('Invalid data target name')
         if not 'dbname' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing dbname value!')
             raise Exception('Invalid data target type')
         if not 'host' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing host value!')
             raise Exception('Invalid data target type')
         if not 'port' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing port value!')
             raise Exception('Invalid data target type')
         if not 'user' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing user value!')
             raise Exception('Invalid data target type')
         if not 'password' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing password value!')
             raise Exception('Invalid data target type')
 
         self.dbname = config[self.data_target_name]['dbname']

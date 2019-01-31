@@ -1,6 +1,7 @@
-import logging
-import psycopg2
 import configparser
+import logging
+
+import psycopg2
 
 
 class Read_Postgresql:
@@ -22,11 +23,16 @@ class Read_Postgresql:
 
     def process(self):
         self.logger.info(f'Starting new read_postgresql job - {self.name}!')
+        if len(self.data.columns_names) > 0:
+            self.logger.info(f'{self.name} not empty input data!')
+            raise Exception(f'{self.name} not empty input data!')
+
         self._load_credentials()
         try:
             self.conn = psycopg2.connect(
                 f'dbname={self.dbname} user={self.user} port={self.port} host={self.host} password={self.password}')
         except:
+            self.logger.info(f'{self.name} - Unable to connect to database.')
             raise Exception('Unable to connect to database.')
 
         self._load_data()
@@ -53,16 +59,22 @@ class Read_Postgresql:
         config = configparser.ConfigParser()
         config.read(self.data_targets)
         if not self.data_target_name in config.sections():
+            self.logger.info(f'{self.name} - not valid data target name!')
             raise Exception('Invalid data target name')
         if not 'dbname' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing dbname value!')
             raise Exception('Invalid data target type')
         if not 'host' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing host value!')
             raise Exception('Invalid data target type')
         if not 'port' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing port value!')
             raise Exception('Invalid data target type')
         if not 'user' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing user value!')
             raise Exception('Invalid data target type')
         if not 'password' in config[self.data_target_name]:
+            self.logger.info(f'{self.name} - missing password value!')
             raise Exception('Invalid data target type')
 
         self.dbname = config[self.data_target_name]['dbname']
